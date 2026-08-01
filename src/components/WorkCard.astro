@@ -1,0 +1,138 @@
+---
+import type { Work } from '../data/works';
+
+interface Props {
+  work: Work;
+}
+
+const { work } = Astro.props;
+
+// Static literal lookups — see note in Header.astro on why these
+// aren't built with template strings (Tailwind JIT needs literal text).
+const ring = {
+  pink: 'group-hover:shadow-[0_0_0_1px_#ff007f]',
+  acid: 'group-hover:shadow-[0_0_0_1px_#ccff00]',
+  turquoise: 'group-hover:shadow-[0_0_0_1px_#00f5d4]',
+} as const;
+
+const titleGlow = {
+  pink: 'group-hover:drop-shadow-neon-pink',
+  acid: 'group-hover:drop-shadow-neon-acid',
+  turquoise: 'group-hover:drop-shadow-neon-turquoise',
+} as const;
+
+const accentHex = { pink: '#ff007f', acid: '#ccff00', turquoise: '#00f5d4' } as const;
+---
+
+<article
+  class:list={[
+    'group flex flex-col border border-graphite-700 bg-graphite-900/40 transition-shadow duration-500',
+    ring[work.accent],
+  ]}
+>
+  <!-- Real photos render here once you drop files into public/images/.
+       If a file is missing, onerror removes the broken <img> and the
+       painted CSS placeholder underneath shows through instead.
+       Clicking opens the shared lightbox (see Layout.astro) to browse
+       every shot of this piece. -->
+  <button
+    type="button"
+    data-lightbox-trigger
+    data-images={JSON.stringify(work.images)}
+    data-title-pl={work.title.pl}
+    data-title-en={work.title.en}
+    aria-label={`${work.title.pl} — powiększ i przeglądaj zdjęcia`}
+    class="canvas-placeholder group/img relative block h-72 w-full cursor-zoom-in overflow-hidden text-left"
+  >
+    <div class="canvas-texture absolute inset-0"></div>
+    <img
+      src={work.images[0]}
+      alt={`${work.title.pl} — Marta Kukla`}
+      loading="lazy"
+      class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover/img:scale-105"
+      onerror="this.remove()"
+    />
+    {work.images.length > 1 && (
+      <span class="absolute bottom-3 right-3 rounded-full bg-graphite-950/70 px-3 py-1 font-sans text-[10px] uppercase tracking-widest2 text-ivory backdrop-blur-sm">
+        {work.images.length} <span class="pl">zdjęcia</span><span class="en">photos</span>
+      </span>
+    )}
+  </button>
+
+  <div class="flex flex-1 flex-col gap-5 p-6">
+    <h3
+      class:list={[
+        'font-serif text-3xl font-light leading-tight text-ivory transition-[filter] duration-500',
+        titleGlow[work.accent],
+      ]}
+    >
+      <span class="pl">{work.title.pl}</span>
+      <span class="en">{work.title.en}</span>
+    </h3>
+
+    <dl class="grid grid-cols-2 gap-x-4 gap-y-2 font-sans text-[11px] uppercase tracking-widest2 text-ivory-muted">
+      <div>
+        <dt class="opacity-60">
+          <span class="pl">Autorka</span><span class="en">Author</span>
+        </dt>
+        <dd class="mt-1 normal-case tracking-normal text-ivory">Marta Kukla</dd>
+      </div>
+      <div>
+        <dt class="opacity-60">
+          <span class="pl">Rok</span><span class="en">Year</span>
+        </dt>
+        <dd class="mt-1 normal-case tracking-normal text-ivory">{work.year}</dd>
+      </div>
+      <div>
+        <dt class="opacity-60">
+          <span class="pl">Wymiary</span><span class="en">Dimensions</span>
+        </dt>
+        <dd class="mt-1 normal-case tracking-normal text-ivory">{work.dimensions}</dd>
+      </div>
+      <div>
+        <dt class="opacity-60">
+          <span class="pl">Materiały</span><span class="en">Materials</span>
+        </dt>
+        <dd class="mt-1 normal-case tracking-normal text-ivory">
+          <span class="pl">{work.materials.pl}</span>
+          <span class="en">{work.materials.en}</span>
+        </dd>
+      </div>
+    </dl>
+
+    <p class="font-serif text-base font-light italic leading-relaxed text-ivory-muted">
+      <span class="pl">{work.description.pl}</span>
+      <span class="en">{work.description.en}</span>
+    </p>
+
+    <div class="mt-auto flex items-center justify-between border-t border-graphite-700 pt-5">
+      <span class="font-serif text-2xl font-light text-ivory">{work.price.toLocaleString('pl-PL')} PLN</span>
+      <a
+        href={`/kontakt?praca=${work.slug}`}
+        class="brush-underline font-sans text-[11px] uppercase tracking-widest2 text-ivory"
+        style={`--accent:${accentHex[work.accent]}`}
+      >
+        <span class="pl">Odezwij się →</span>
+        <span class="en">Get in touch →</span>
+      </a>
+    </div>
+  </div>
+</article>
+
+<style define:vars={{ accent: accentHex[work.accent] }}>
+  .canvas-placeholder {
+    background:
+      radial-gradient(ellipse at 30% 30%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 60%),
+      linear-gradient(150deg, #1d1d1c 0%, #141414 100%);
+  }
+  .canvas-texture {
+    background-image: repeating-linear-gradient(
+      115deg,
+      rgba(243, 239, 230, 0.03) 0px,
+      rgba(243, 239, 230, 0.03) 1px,
+      transparent 1px,
+      transparent 5px
+    );
+  }
+</style>
+

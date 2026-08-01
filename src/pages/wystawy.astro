@@ -1,0 +1,64 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const exhibitions = [
+  {
+    year: '2025',
+    pl: 'Cisza przed świtem — wystawa indywidualna, Galeria Miejska, Wrocław',
+    en: 'Silence Before Dawn — solo show, Municipal Gallery, Wrocław',
+    accent: 'turquoise' as const,
+  },
+  {
+    year: '2024',
+    pl: 'Nowe Głosy — wystawa zbiorowa, BWA Katowice',
+    en: 'New Voices — group show, BWA Katowice',
+    accent: 'pink' as const,
+  },
+  {
+    year: '2023',
+    pl: 'Wewnętrzny ogród — wystawa indywidualna, Dom Artysty, Kraków',
+    en: 'Interior Garden — solo show, Artist House, Kraków',
+    accent: 'acid' as const,
+  },
+  {
+    year: '2022',
+    pl: 'Malarstwo Polskie Dziś — wystawa zbiorowa, Berlin',
+    en: 'Polish Painting Today — group show, Berlin',
+    accent: 'turquoise' as const,
+  },
+];
+
+const border = {
+  pink: 'hover:border-neon-pink',
+  acid: 'hover:border-neon-acid',
+  turquoise: 'hover:border-neon-turquoise',
+} as const;
+---
+
+<Layout title="Wystawy">
+  <section class="mx-auto max-w-4xl px-6 pb-24 pt-32 md:px-12 md:pt-40">
+    <p class="mb-4 font-sans text-[11px] uppercase tracking-widest2 text-ivory-muted">
+      <span class="pl">Historia wystaw</span><span class="en">Exhibition history</span>
+    </p>
+    <h1 class="mb-16 font-serif text-5xl font-extralight text-ivory md:text-6xl">
+      <span class="pl">Wystawy</span><span class="en">Exhibitions</span>
+    </h1>
+
+    <ul class="flex flex-col">
+      {exhibitions.map((e) => (
+        <li
+          class:list={[
+            'flex flex-col gap-2 border-t border-graphite-700 py-8 transition-colors duration-500 first:border-t md:flex-row md:items-baseline md:gap-10',
+            border[e.accent],
+          ]}
+        >
+          <span class="font-serif text-2xl font-light text-ivory-muted md:w-24 md:shrink-0">{e.year}</span>
+          <span class="font-serif text-xl font-light leading-relaxed text-ivory md:text-2xl">
+            <span class="pl">{e.pl}</span>
+            <span class="en">{e.en}</span>
+          </span>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Layout>

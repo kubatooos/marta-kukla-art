@@ -1,0 +1,47 @@
+---
+import Header from '../components/Header.astro';
+import Lightbox from '../components/Lightbox.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Marta Kukla — malarstwo / painting.' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title} — Marta Kukla</title>
+  </head>
+  <body>
+    <!-- Pure-CSS language switch: no JS. -->
+    <input type="radio" name="lang" id="lang-pl" class="sr-only" checked />
+    <input type="radio" name="lang" id="lang-en" class="sr-only" />
+
+    <Header />
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="border-t border-graphite-700 px-6 py-10 md:px-12">
+      <div class="mx-auto flex max-w-6xl flex-col gap-6 text-xs uppercase tracking-widest2 text-ivory-muted md:flex-row md:items-center md:justify-between">
+        <p class="font-serif text-base normal-case tracking-normal text-ivory">Marta Kukla</p>
+        <p>
+          <span class="pl">Wszystkie prace dostępne po kontakcie</span>
+          <span class="en">All works available on request</span>
+        </p>
+        <p>&copy; {new Date().getFullYear()}</p>
+      </div>
+    </footer>
+
+    <Lightbox />
+  </body>
+</html>

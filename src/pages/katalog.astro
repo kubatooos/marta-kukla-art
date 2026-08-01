@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+import WorkCard from '../components/WorkCard.astro';
+import { works } from '../data/works';
+---
+
+<Layout title="Katalog prac" description="Katalog obrazów Marty Kukli — olej i akryl na płótnie.">
+  <section class="mx-auto max-w-6xl px-6 pb-24 pt-32 md:px-12 md:pt-40">
+    <p class="mb-4 font-sans text-[11px] uppercase tracking-widest2 text-ivory-muted">
+      <span class="pl">{works.length} prac</span><span class="en">{works.length} works</span>
+    </p>
+    <h1 class="mb-16 font-serif text-5xl font-extralight text-ivory md:text-6xl">
+      <span class="pl">Katalog prac</span><span class="en">Catalogue</span>
+    </h1>
+
+    {works.length > 0 ? (
+      <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {works.map((work) => <WorkCard work={work} />)}
+      </div>
+    ) : (
+      <p class="max-w-md font-serif text-xl font-light italic text-ivory-muted">
+        <span class="pl">Katalog jest w przygotowaniu — zdjęcia prac pojawią się tutaj wkrótce.</span>
+        <span class="en">The catalogue is being prepared — photos will appear here soon.</span>
+      </p>
+    )}
+  </section>
+</Layout>

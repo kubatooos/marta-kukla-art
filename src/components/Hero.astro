@@ -1,0 +1,49 @@
+---
+// The brief calls for a macro photo of a brush mid-stroke on canvas.
+// /public/images/hero-brush.jpg is the intended swap-in — drop a real
+// photograph there (any name, update the src below) once photography
+// is available. Until then this renders a painted CSS approximation
+// in the same tonal register so the layout ships looking intentional,
+// not like a broken image.
+---
+
+<section class="relative flex h-[100svh] min-h-[560px] w-full items-center justify-center overflow-hidden bg-graphite-950">
+  <!-- Swap this div for: <img src="/images/hero-brush.jpg" class="absolute inset-0 h-full w-full object-cover" alt=""> -->
+  <div class="hero-brush-fallback absolute inset-0"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-graphite-950/70 via-graphite-950/55 to-graphite-950"></div>
+
+  <div class="relative z-10 flex flex-col items-center px-6 text-center">
+    <p class="mb-6 font-sans text-[11px] uppercase tracking-widest2 text-ivory-muted">
+      <span class="pl">Malarstwo</span><span class="en">Painting</span>
+    </p>
+    <h1 class="font-serif text-6xl font-extralight leading-[0.95] tracking-wide text-ivory sm:text-8xl md:text-9xl">
+      MARTA<br />KUKLA
+    </h1>
+    <p class="mt-8 font-serif text-xl italic text-ivory-muted sm:text-2xl">
+      <span class="pl">Ciesz się sztuką</span><span class="en">Enjoy the art</span>
+    </p>
+
+    <a
+      href="/katalog"
+      class="brush-underline mt-14 font-sans text-xs uppercase tracking-widest2 text-ivory hover:drop-shadow-neon-turquoise"
+      style="--accent:#00f5d4"
+    >
+      <span class="pl">Zobacz katalog prac →</span>
+      <span class="en">View the catalogue →</span>
+    </a>
+  </div>
+</section>
+
+<style>
+  /* Painted placeholder standing in for the macro brush photograph:
+     layered radial blooms in the neon palette over graphite, softened
+     to read as pigment on canvas rather than a decorative gradient. */
+  .hero-brush-fallback {
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 30%, rgba(255, 0, 127, 0.16), transparent 60%),
+      radial-gradient(ellipse 50% 35% at 80% 20%, rgba(0, 245, 212, 0.14), transparent 60%),
+      radial-gradient(ellipse 70% 50% at 50% 85%, rgba(204, 255, 0, 0.08), transparent 65%),
+      linear-gradient(160deg, #1a1a1a 0%, #121212 55%, #0d0d0d 100%);
+    filter: saturate(1.1);
+  }
+</style>

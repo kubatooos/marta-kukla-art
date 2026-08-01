@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@200;300;400;500&family=Jost:wght@300;400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-graphite-700;
+  }
+  html {
+    @apply scroll-smooth;
+    background-color: #121212;
+  }
+  body {
+    @apply bg-graphite-950 text-ivory font-sans antialiased;
+  }
+  ::selection {
+    background: #ff007f;
+    color: #121212;
+  }
+  :focus-visible {
+    outline: 1px solid #f3efe6;
+    outline-offset: 6px;
+  }
+}
+
+/* ---------------------------------------------------------
+   Language toggle — pure CSS, no client JS.
+   Two radios (#lang-pl / #lang-en) live at the top of <body>.
+   Content is authored twice, wrapped in .pl / .en spans.
+--------------------------------------------------------- */
+.en { display: none; }
+.pl { display: inline; }
+
+html:has(#lang-en:checked) .pl { display: none; }
+html:has(#lang-en:checked) .en { display: inline; }
+
+/* ---------------------------------------------------------
+   Fullscreen menu — pure CSS checkbox hack.
+--------------------------------------------------------- */
+#menu-toggle:checked ~ #site-nav-overlay {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+#menu-toggle:checked ~ .menu-btn .bar-top {
+  transform: translateY(6px) rotate(45deg);
+}
+#menu-toggle:checked ~ .menu-btn .bar-mid {
+  opacity: 0;
+}
+#menu-toggle:checked ~ .menu-btn .bar-bot {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+html:has(#menu-toggle:checked) {
+  overflow: hidden;
+}
+
+html.lightbox-open {
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------
+   Signature interaction — the "wet brush" underline.
+   A single-pixel stroke grows in from the left in the link's
+   assigned neon, while the glyphs themselves lift into a glow.
+   Applied via .brush-underline + an inline --accent custom
+   property set per link (see Header.astro).
+--------------------------------------------------------- */
+.brush-underline {
+  background-image: linear-gradient(var(--accent, #f3efe6), var(--accent, #f3efe6));
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition:
+    background-size 0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
+    color 0.4s ease,
+    filter 0.4s ease;
+}
+.brush-underline:hover,
+.brush-underline:focus-visible {
+  background-size: 100% 1px;
+  color: var(--accent, #f3efe6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

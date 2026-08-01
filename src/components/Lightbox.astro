@@ -1,0 +1,148 @@
+---
+// Single shared lightbox, reused by every WorkCard on the page.
+// Opened via [data-lightbox-trigger] buttons carrying data-images (JSON
+// array of shot URLs) and data-title-pl / data-title-en.
+//
+// This is the one place in the project with real client-side JavaScript.
+// Everything else (menu, language switch, hover states) is pure CSS —
+// but "browse N photos of the same painting" needs actual state and
+// keyboard handling, so it gets a small (~50 line) vanilla script.
+// No framework, no hydration, no build step of its own — just JS.
+---
+
+<div
+  id="lightbox"
+  class="lightbox fixed inset-0 z-50 hidden items-center justify-center bg-graphite-950/95 backdrop-blur-sm"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Podgląd obrazu"
+>
+  <button
+    id="lightbox-close"
+    type="button"
+    class="absolute right-5 top-5 font-sans text-xs uppercase tracking-widest2 text-ivory-muted transition-colors hover:text-ivory md:right-8 md:top-8"
+  >
+    <span class="pl">Zamknij ✕</span><span class="en">Close ✕</span>
+  </button>
+
+  <button
+    id="lightbox-prev"
+    type="button"
+    aria-label="Poprzednie zdjęcie"
+    class="absolute left-2 top-1/2 -translate-y-1/2 px-3 font-serif text-4xl font-extralight text-ivory-muted transition-colors hover:text-neon-turquoise hover:drop-shadow-neon-turquoise md:left-6 md:text-5xl"
+  >‹</button>
+  <button
+    id="lightbox-next"
+    type="button"
+    aria-label="Następne zdjęcie"
+    class="absolute right-2 top-1/2 -translate-y-1/2 px-3 font-serif text-4xl font-extralight text-ivory-muted transition-colors hover:text-neon-turquoise hover:drop-shadow-neon-turquoise md:right-6 md:text-5xl"
+  >›</button>
+
+  <figure class="flex max-h-[88vh] w-full max-w-4xl flex-col items-center gap-5 px-16">
+    <img id="lightbox-img" src="" alt="" class="max-h-[70vh] w-auto max-w-full object-contain" />
+    <figcaption class="flex flex-col items-center gap-3 text-center">
+      <span id="lightbox-title" class="font-serif text-2xl font-light text-ivory"></span>
+      <span id="lightbox-counter" class="font-sans text-[11px] uppercase tracking-widest2 text-ivory-muted"></span>
+      <div id="lightbox-dots" class="mt-1 flex gap-2"></div>
+    </figcaption>
+  </figure>
+</div>
+
+<script>
+  const lightbox = document.getElementById('lightbox') as HTMLElement;
+  const imgEl = document.getElementById('lightbox-img') as HTMLImageElement;
+  const titleEl = document.getElementById('lightbox-title') as HTMLElement;
+  const counterEl = document.getElementById('lightbox-counter') as HTMLElement;
+  const dotsEl = document.getElementById('lightbox-dots') as HTMLElement;
+  const closeBtn = document.getElementById('lightbox-close') as HTMLButtonElement;
+  const prevBtn = document.getElementById('lightbox-prev') as HTMLButtonElement;
+  const nextBtn = document.getElementById('lightbox-next') as HTMLButtonElement;
+  const langEn = document.getElementById('lang-en') as HTMLInputElement | null;
+
+  let images: string[] = [];
+  let index = 0;
+  let lastFocused: HTMLElement | null = null;
+
+  function currentLang(): 'pl' | 'en' {
+    return langEn?.checked ? 'en' : 'pl';
+  }
+
+  function render(trigger: HTMLElement) {
+    imgEl.src = images[index];
+    const title = trigger.dataset[currentLang() === 'en' ? 'titleEn' : 'titlePl'] ?? '';
+    imgEl.alt = title;
+    titleEl.textContent = title;
+    counterEl.textContent = `${index + 1} / ${images.length}`;
+
+    dotsEl.innerHTML = '';
+    images.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.setAttribute('aria-label', `Zdjęcie ${i + 1}`);
+      dot.className =
+        'h-1.5 w-1.5 rounded-full transition-colors ' +
+        (i === index ? 'bg-neon-turquoise' : 'bg-graphite-700 hover:bg-ivory-muted');
+      dot.addEventListener('click', () => {
+        index = i;
+        render(trigger);
+      });
+      dotsEl.appendChild(dot);
+    });
+
+    const multi = images.length > 1;
+    prevBtn.style.visibility = multi ? 'visible' : 'hidden';
+    nextBtn.style.visibility = multi ? 'visible' : 'hidden';
+  }
+
+  function open(trigger: HTMLElement) {
+    images = JSON.parse(trigger.dataset.images ?? '[]');
+    if (!images.length) return;
+    index = 0;
+    lastFocused = document.activeElement as HTMLElement;
+    render(trigger);
+    lightbox.classList.remove('hidden');
+    lightbox.classList.add('flex');
+    document.documentElement.classList.add('lightbox-open');
+    closeBtn.focus();
+  }
+
+  function close() {
+    lightbox.classList.add('hidden');
+    lightbox.classList.remove('flex');
+    document.documentElement.classList.remove('lightbox-open');
+    lastFocused?.focus();
+  }
+
+  let activeTrigger: HTMLElement | null = null;
+
+  document.querySelectorAll<HTMLElement>('[data-lightbox-trigger]').forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      activeTrigger = trigger;
+      open(trigger);
+    });
+  });
+
+  function next() {
+    if (!activeTrigger) return;
+    index = (index + 1) % images.length;
+    render(activeTrigger);
+  }
+  function prev() {
+    if (!activeTrigger) return;
+    index = (index - 1 + images.length) % images.length;
+    render(activeTrigger);
+  }
+
+  closeBtn.addEventListener('click', close);
+  nextBtn.addEventListener('click', next);
+  prevBtn.addEventListener('click', prev);
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) close();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (lightbox.classList.contains('hidden')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowRight') next();
+    if (e.key === 'ArrowLeft') prev();
+  });
+</script>

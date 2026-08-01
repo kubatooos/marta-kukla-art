@@ -1,0 +1,93 @@
+---
+interface NavItem {
+  href: string;
+  pl: string;
+  en: string;
+  accent: 'pink' | 'acid' | 'turquoise';
+}
+
+const accentHex = {
+  pink: '#ff007f',
+  acid: '#ccff00',
+  turquoise: '#00f5d4',
+} as const;
+
+// Written as static literals (not template-built) so Tailwind's JIT scanner,
+// which reads raw file text, can find and generate them.
+const glowClass = {
+  pink: 'hover:drop-shadow-neon-pink',
+  acid: 'hover:drop-shadow-neon-acid',
+  turquoise: 'hover:drop-shadow-neon-turquoise',
+} as const;
+
+const items: NavItem[] = [
+  { href: '/', pl: 'Home', en: 'Home', accent: 'turquoise' },
+  { href: '/o-mnie', pl: 'O mnie', en: 'About', accent: 'pink' },
+  { href: '/wystawy', pl: 'Wystawy', en: 'Exhibitions', accent: 'acid' },
+  { href: '/katalog', pl: 'Katalog prac', en: 'Catalogue', accent: 'turquoise' },
+  { href: '/kontakt', pl: 'Kontakt', en: 'Contact', accent: 'pink' },
+];
+---
+
+<header class="fixed inset-x-0 top-0 z-40 flex items-center justify-between px-6 py-5 md:px-12">
+  <a
+    href="/"
+    class="brush-underline font-serif text-lg font-light tracking-wide text-ivory"
+    style="--accent:#00f5d4"
+  >
+    Marta Kukla
+  </a>
+
+  <div class="flex items-center gap-6">
+    <!-- PL / ENG switch — pure CSS, labels drive the two radios in Layout.astro -->
+    <div class="flex items-center gap-2 font-sans text-xs tracking-widest2 text-ivory-muted">
+      <label
+        for="lang-pl"
+        class="cursor-pointer select-none transition-colors hover:text-ivory [html:has(#lang-pl:checked)_&]:text-ivory"
+      >PL</label>
+      <span aria-hidden="true">/</span>
+      <label
+        for="lang-en"
+        class="cursor-pointer select-none transition-colors hover:text-ivory [html:has(#lang-en:checked)_&]:text-ivory"
+      >ENG</label>
+    </div>
+
+    <!-- Hamburger — checkbox hack, no client JS -->
+    <input type="checkbox" id="menu-toggle" class="sr-only" aria-label="Toggle menu" />
+    <label
+      for="menu-toggle"
+      class="menu-btn relative z-50 flex h-9 w-9 cursor-pointer flex-col items-center justify-center gap-[6px]"
+      aria-hidden="true"
+    >
+      <span class="bar-top h-px w-6 bg-ivory transition-transform duration-300"></span>
+      <span class="bar-mid h-px w-6 bg-ivory transition-opacity duration-300"></span>
+      <span class="bar-bot h-px w-6 bg-ivory transition-transform duration-300"></span>
+    </label>
+  </div>
+</header>
+
+<!-- Fullscreen overlay nav -->
+<nav
+  id="site-nav-overlay"
+  class="fixed inset-0 z-30 flex translate-y-4 flex-col items-center justify-center gap-4 bg-graphite-950/98 opacity-0 invisible backdrop-blur-sm transition-all duration-700 ease-brush md:gap-6"
+  aria-label="Main navigation"
+>
+  {items.map((item) => (
+    <a
+      href={item.href}
+      class:list={[
+        'brush-underline font-serif text-4xl font-extralight tracking-wide sm:text-6xl md:text-7xl',
+        glowClass[item.accent],
+      ]}
+      style={`--accent:${accentHex[item.accent]}`}
+    >
+      <span class="pl">{item.pl}</span>
+      <span class="en">{item.en}</span>
+    </a>
+  ))}
+
+  <div class="mt-10 flex flex-col items-center gap-2 font-sans text-xs uppercase tracking-widest2 text-ivory-muted md:mt-16 md:flex-row md:gap-10">
+    <a href="mailto:kontakt@martakukla.pl" class="hover:text-ivory">kontakt@martakukla.pl</a>
+    <a href="tel:+48000000000" class="hover:text-ivory">+48 000 000 000</a>
+  </div>
+</nav>
