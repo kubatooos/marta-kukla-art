@@ -14,6 +14,12 @@
   }
   body {
     @apply bg-graphite-950 text-ivory font-sans antialiased;
+    /* Paintbrush cursor: diagonal ivory handle, pink tip. Hotspot (7,23) sits
+       at the tip, so the "paint" touches exactly where the pointer is. */
+    cursor:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cline x1='26' y1='4' x2='10' y2='20' stroke='%23F3EFE6' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='7' cy='23' r='4' fill='%23ff007f'/%3E%3C/svg%3E")
+      7 23,
+      auto;
   }
   ::selection {
     background: #ff007f;

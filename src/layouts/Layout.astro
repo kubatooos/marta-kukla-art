@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Lightbox from '../components/Lightbox.astro';
+import CursorEffects from '../components/CursorEffects.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -43,5 +44,6 @@ const { title, description = 'Marta Kukla — malarstwo / painting.' } = Astro.p
     </footer>
 
     <Lightbox />
+    <CursorEffects />
   </body>
 </html>

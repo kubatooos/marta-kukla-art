@@ -1,0 +1,74 @@
+---
+// Paint-splash on click. Pairs with the brush cursor set on <body> in
+// global.css. Skips clicks on interactive elements (links, buttons, form
+// controls) so the splash doesn't visually cover the thing being clicked.
+// One more small vanilla script, no framework, no hydration — same pattern
+// as Lightbox.astro.
+---
+
+<div id="paint-splashes" class="pointer-events-none fixed inset-0 z-[70] overflow-hidden" aria-hidden="true"></div>
+
+<style is:global>
+  .paint-splash {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    margin: -22px 0 0 -22px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--splash-color) 0%, transparent 70%);
+    transform: rotate(var(--splash-angle)) scale(0.2);
+    opacity: 0.9;
+    animation: paint-splash-pop 0.65s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+  /* The smear: an elongated, blurred streak trailing off the main blob,
+     as if the brush dragged slightly on contact. */
+  .paint-splash::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 54px;
+    height: 8px;
+    margin-top: -4px;
+    border-radius: 999px;
+    background: var(--splash-color);
+    opacity: 0.45;
+    filter: blur(3px);
+    transform-origin: left center;
+  }
+  @keyframes paint-splash-pop {
+    0% {
+      opacity: 0.9;
+      transform: rotate(var(--splash-angle)) scale(0.2);
+    }
+    35% {
+      opacity: 0.65;
+      transform: rotate(var(--splash-angle)) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: rotate(var(--splash-angle)) scale(1.35);
+    }
+  }
+</style>
+
+<script>
+  const layer = document.getElementById('paint-splashes') as HTMLElement;
+  const colors = ['#ff007f', '#ccff00', '#00f5d4'];
+
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    // Don't splash on top of things people are actually trying to press.
+    if (target.closest('a, button, input, label, textarea, select')) return;
+
+    const splash = document.createElement('span');
+    splash.className = 'paint-splash';
+    splash.style.left = `${e.clientX}px`;
+    splash.style.top = `${e.clientY}px`;
+    splash.style.setProperty('--splash-color', colors[Math.floor(Math.random() * colors.length)]);
+    splash.style.setProperty('--splash-angle', `${Math.random() * 360}deg`);
+
+    layer.appendChild(splash);
+    splash.addEventListener('animationend', () => splash.remove());
+  });
+</script>
