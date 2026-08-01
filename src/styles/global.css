@@ -38,21 +38,25 @@ html:has(#lang-en:checked) .en { display: inline; }
 
 /* ---------------------------------------------------------
    Fullscreen menu — pure CSS checkbox hack.
+   Uses html:has() rather than a ~ sibling combinator because
+   #menu-toggle is nested inside the header's flex wrapper, so
+   it and #site-nav-overlay are NOT actual DOM siblings — a ~
+   selector between them silently never matches.
 --------------------------------------------------------- */
-#menu-toggle:checked ~ #site-nav-overlay {
+html:has(#menu-toggle:checked) #site-nav-overlay {
   visibility: visible;
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
 }
 
-#menu-toggle:checked ~ .menu-btn .bar-top {
+html:has(#menu-toggle:checked) .menu-btn .bar-top {
   transform: translateY(6px) rotate(45deg);
 }
-#menu-toggle:checked ~ .menu-btn .bar-mid {
+html:has(#menu-toggle:checked) .menu-btn .bar-mid {
   opacity: 0;
 }
-#menu-toggle:checked ~ .menu-btn .bar-bot {
+html:has(#menu-toggle:checked) .menu-btn .bar-bot {
   transform: translateY(-6px) rotate(-45deg);
 }
 
