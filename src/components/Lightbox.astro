@@ -62,6 +62,7 @@
   let images: string[] = [];
   let index = 0;
   let lastFocused: HTMLElement | null = null;
+  let historyPushed = false;
 
   function currentLang(): 'pl' | 'en' {
     return langEn?.checked ? 'en' : 'pl';
@@ -104,14 +105,43 @@
     lightbox.classList.add('flex');
     document.documentElement.classList.add('lightbox-open');
     closeBtn.focus();
+
+    // One history checkpoint per "open", not per image swiped. This is
+    // what lets the browser/OS back gesture close the lightbox instead
+    // of navigating away from the page entirely.
+    history.pushState({ lightboxOpen: true }, '', location.href);
+    historyPushed = true;
   }
 
-  function close() {
+  // Actually hides the lightbox. Called either directly (when there's no
+  // history entry to unwind) or from the popstate handler (when the user
+  // pressed back / swiped back).
+  function doClose() {
     lightbox.classList.add('hidden');
     lightbox.classList.remove('flex');
     document.documentElement.classList.remove('lightbox-open');
     lastFocused?.focus();
   }
+
+  // Called from the UI (X button, backdrop click, Escape key). If we
+  // pushed a history entry on open, unwind it via history.back() — that
+  // fires popstate, which does the actual doClose(). Keeps browser
+  // history consistent regardless of how the lightbox gets closed.
+  function close() {
+    if (historyPushed) {
+      historyPushed = false;
+      history.back();
+    } else {
+      doClose();
+    }
+  }
+
+  window.addEventListener('popstate', () => {
+    if (!lightbox.classList.contains('hidden')) {
+      historyPushed = false;
+      doClose();
+    }
+  });
 
   let activeTrigger: HTMLElement | null = null;
 
