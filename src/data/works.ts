@@ -15,6 +15,7 @@ export interface Work {
   accent: Accent;
   status: Status; // 'sold' pokazuje plakietkę i zamienia cenę na "Sprzedane"
   featuredOrder: number | null; // pozycja na stronie głównej; null = nie pokazuj
+  sortOrder: number | null; // ręczna pozycja w katalogu; null = naturalna kolejność z arkusza
   images: string[]; // every shot found on disk for this slug, in order
 }
 
@@ -48,8 +49,7 @@ function readShots(slug: string): string[] {
 /**
  * Minimalny, ale poprawny parser CSV (RFC4180): obsługuje pola w cudzysłowie
  * z przecinkami/nowymi liniami w środku oraz podwójne cudzysłowy jako escape
- * ("" -> "). Świadomie bez zewnętrznej zależności — plik jest mały (21 wierszy),
- * a to oszczędza dependency tylko dla jednej funkcji.
+ * ("" -> "). Świadomie bez zewnętrznej zależności.
  */
 function parseCSV(text: string): string[][] {
   const rows: string[][] = [];
@@ -106,18 +106,7 @@ function parseCSV(text: string): string[][] {
   return rows.filter((r) => !(r.length === 1 && r[0] === ''));
 }
 
-/**
- * Wczytuje src/data/works.csv i zamienia go na tablicę WorkMeta.
- * To jedyne miejsce, które trzeba edytować, żeby dodać/zmienić opisy —
- * plik CSV otwiera się i edytuje w Excelu / Numbers / Google Sheets
- * (przy zapisie: "CSV UTF-8"), a przy każdym buildzie strona wczytuje
- * go od nowa.
- */
-function readWorksCSV(): WorkMeta[] {
-  const csvPath = path.join(process.cwd(), 'src', 'data', 'works.csv');
-  const text = fs.readFileSync(csvPath, 'utf-8');
-  const rows = parseCSV(text);
-
+function rowsToWorkMeta(rows: string[][]): WorkMeta[] {
   const header = rows[0].map((h) => h.trim());
   const dataRows = rows.slice(1);
 
@@ -140,18 +129,63 @@ function readWorksCSV(): WorkMeta[] {
         accent: (rec.accent as Accent) || 'turquoise',
         status: rec.status === 'sold' ? 'sold' : 'available',
         featuredOrder: rec.featured_order ? parseInt(rec.featured_order, 10) : null,
+        sortOrder: rec.sort_order ? parseInt(rec.sort_order, 10) : null,
       };
     });
 }
 
-const worksMeta: WorkMeta[] = readWorksCSV();
+const LOCAL_CSV_PATH = path.join(process.cwd(), 'src', 'data', 'works.csv');
 
-// Dołącz zdjęcia z dysku i odrzuć prace, dla których nie znaleziono
-// żadnego pliku — to jest jedyne miejsce, które decyduje, czy dana
-// praca pojawi się w katalogu.
+/**
+ * Źródło danych katalogu — z priorytetem:
+ *
+ * 1. Jeśli w środowisku builda jest ustawiona zmienna WORKS_CSV_URL
+ *    (link do arkusza Google opublikowanego jako CSV), pobiera dane stamtąd.
+ *    To pozwala edytować katalog z telefonu w Google Sheets, bez gita.
+ * 2. Jeśli zmiennej nie ma, albo pobranie się nie uda (np. arkusz chwilowo
+ *    niedostępny), używa lokalnego src/data/works.csv jako bezpiecznego
+ *    fallbacku — strona nigdy się nie wywali z powodu problemów z siecią
+ *    podczas builda.
+ *
+ * Log w terminalu builda zawsze mówi, które źródło faktycznie zostało użyte.
+ */
+async function readWorksCSV(): Promise<WorkMeta[]> {
+  const remoteUrl = process.env.WORKS_CSV_URL;
+
+  if (remoteUrl) {
+    try {
+      const res = await fetch(remoteUrl);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const text = await res.text();
+      console.log(`[works] Dane katalogu wczytane z Google Sheets (WORKS_CSV_URL).`);
+      return rowsToWorkMeta(parseCSV(text));
+    } catch (err) {
+      console.warn(
+        `[works] Nie udało się pobrać danych z WORKS_CSV_URL (${remoteUrl}). Używam lokalnego src/data/works.csv jako fallback. Błąd:`,
+        err,
+      );
+    }
+  }
+
+  const text = fs.readFileSync(LOCAL_CSV_PATH, 'utf-8');
+  console.log(`[works] Dane katalogu wczytane z lokalnego src/data/works.csv.`);
+  return rowsToWorkMeta(parseCSV(text));
+}
+
+const worksMeta: WorkMeta[] = await readWorksCSV();
+
+// Dołącz zdjęcia z dysku, odrzuć prace bez zdjęć, i posortuj:
+// prace z ustawionym sort_order idą pierwsze (rosnąco wg numeru),
+// reszta zostaje w naturalnej kolejności z arkusza/CSV (sort jest stabilny).
 export const works: Work[] = worksMeta
   .map((meta) => ({ ...meta, images: readShots(meta.slug) }))
-  .filter((work) => work.images.length > 0);
+  .filter((work) => work.images.length > 0)
+  .sort((a, b) => {
+    if (a.sortOrder !== null && b.sortOrder !== null) return a.sortOrder - b.sortOrder;
+    if (a.sortOrder !== null) return -1;
+    if (b.sortOrder !== null) return 1;
+    return 0;
+  });
 
 // Prace do sekcji "Wybrane prace" na stronie głównej — sterowane kolumną
 // featured_order w CSV (puste = pomiń, liczba = pokaż w tej kolejności).

@@ -50,7 +50,7 @@ const accentHex = { pink: '#ff007f', acid: '#ccff00', turquoise: '#00f5d4' } as 
       alt={`${work.title.pl} — Marta Kukla`}
       loading="lazy"
       class:list={[
-        'absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover/img:scale-105',
+        'absolute inset-0 h-full w-full object-contain transition-transform duration-700 group-hover/img:scale-105',
         work.status === 'sold' && 'grayscale-[60%] opacity-70',
       ]}
       onerror="this.remove()"
