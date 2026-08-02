@@ -63,7 +63,9 @@ src/
     Header.astro             – logo, PL/ENG, hamburger, overlay nawigacji
     Hero.astro                – sekcja hero strony głównej
     WorkCard.astro            – karta obrazu (katalog + strona główna)
-  data/works.ts               – dane katalogu (typowane, PL/EN)
+  data/
+    works.csv                  – TREŚĆ katalogu: tytuły, opisy, ceny (edytuj w Excelu/Sheets)
+    works.ts                   – wczytuje works.csv + zdjęcia z dysku, nic tu nie edytujesz na co dzień
   pages/
     index.astro                – Home
     o-mnie.astro                – O mnie
@@ -73,6 +75,35 @@ src/
   styles/global.css            – fonty, tokeny, CSS dla i18n / menu / neonów
 tailwind.config.mjs            – paleta graphite/ivory/neon, fonty, dropShadow
 ```
+
+## Edycja opisów prac (works.csv)
+
+Cała treść katalogu — tytuły, rok, wymiary, materiały, opisy PL/EN, cena — siedzi w
+`src/data/works.csv`, nie w kodzie. Otwórz go w Excelu / Numbers / Google Sheets, edytuj,
+zapisz jako **CSV UTF-8** (ważne: nie jako `.xlsx`), commit + push — po następnym buildzie
+zmiany są widoczne.
+
+Kolumny:
+
+| kolumna | znaczenie |
+|---|---|
+| `slug` | musi być identyczny z nazwą folderu w `public/images/{slug}/` — to po nim system łączy wiersz ze zdjęciami |
+| `title_pl` / `title_en` | tytuł |
+| `year` | rok |
+| `dimensions` | wymiary, np. `100 × 140 cm` |
+| `materials_pl` / `materials_en` | materiały |
+| `description_pl` / `description_en` | opis |
+| `price` | cena w PLN, sama liczba bez spacji/waluty |
+| `accent` | `pink`, `acid` lub `turquoise` — kolor neonu tej karty |
+| `featured_order` | puste = praca NIE pojawia się na stronie głównej. `1`, `2`, `3`... = pojawia się, w tej kolejności |
+
+**Uwagi:**
+- Pola z przecinkiem w środku (np. `Akryl, pigment, płótno`) muszą być w cudzysłowie —
+  Excel/Sheets robi to automatycznie przy zapisie CSV, nie trzeba pilnować ręcznie.
+- Dodanie nowego wiersza = nowa praca. Pamiętaj o dopasowanym folderze zdjęć w
+  `public/images/{slug}/`, inaczej praca nie pojawi się w katalogu (patrz sekcja "Zdjęcia").
+- Usunięcie wiersza = praca znika ze strony (zdjęcia w `public/images/` możesz zostawić,
+  po prostu nie będą używane).
 
 ## Kontakt / formularz
 
