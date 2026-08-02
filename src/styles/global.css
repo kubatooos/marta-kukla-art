@@ -14,10 +14,12 @@
   }
   body {
     @apply bg-graphite-950 text-ivory font-sans antialiased;
-    /* Paintbrush cursor: diagonal ivory handle, pink tip. Hotspot (7,23) sits
-       at the tip, so the "paint" touches exactly where the pointer is. */
+    /* Paintbrush cursor: wood handle -> metal ferrule -> tapered bristle
+       fan with strand texture and a wet-paint highlight at the tip.
+       Hotspot (7,23) sits right where the bristles come to a point, so
+       clicks/splashes line up with where the "paint" actually touches. */
     cursor:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cline x1='26' y1='4' x2='10' y2='20' stroke='%23F3EFE6' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='7' cy='23' r='4' fill='%23ff007f'/%3E%3C/svg%3E")
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cline x1='29' y1='1' x2='16' y2='14' stroke='%238a6a45' stroke-width='3.6' stroke-linecap='round'/%3E%3Cline x1='28.3' y1='0.6' x2='15.6' y2='13.3' stroke='%23d8b98a' stroke-width='1.4' stroke-linecap='round'/%3E%3Cline x1='17.6' y1='12.6' x2='14.4' y2='15.8' stroke='%23b8b8b8' stroke-width='3.8' stroke-linecap='round'/%3E%3Cline x1='17.9' y1='12.9' x2='14.7' y2='16.1' stroke='%23e6e6e6' stroke-width='1.2' stroke-linecap='round'/%3E%3Cpath d='M15,15 C17,16 17.3,18.6 15,21 C12.5,23.6 9.5,25.4 7.2,23.6 C5.6,22.3 6.8,19.3 9,17.3 C11,15.5 13.2,14.3 15,15 Z' fill='%23ff007f'/%3E%3Cpath d='M14.5,16.2 C12,18.6 9.5,20.8 7.6,23' stroke='%23b8005f' stroke-width='0.55' fill='none' opacity='0.65'/%3E%3Cpath d='M15.6,17.3 C13,19.6 10.5,21.7 8.5,23.7' stroke='%23b8005f' stroke-width='0.55' fill='none' opacity='0.55'/%3E%3Cpath d='M13.2,15.6 C11,18 8.8,20.3 7.2,22.4' stroke='%23ff4f9c' stroke-width='0.55' fill='none' opacity='0.5'/%3E%3Ccircle cx='7.3' cy='23.2' r='1.3' fill='%23ff8ec2'/%3E%3C/svg%3E")
       7 23,
       auto;
   }
