@@ -57,6 +57,20 @@ const accentHex = { pink: '#ff007f', acid: '#ccff00', turquoise: '#00f5d4' } as 
         {work.images.length} <span class="pl">zdjęcia</span><span class="en">photos</span>
       </span>
     )}
+
+    <!-- Hover reveal: darkens the photo and slides up a "ZOBACZ" label in
+         this work's own accent colour, echoing the card's neon on hover
+         rather than a fixed brand colour. -->
+    <span
+      class="pointer-events-none absolute inset-0 flex items-end justify-center bg-gradient-to-t from-graphite-950/85 via-graphite-950/15 to-transparent opacity-0 transition-opacity duration-500 group-hover/img:opacity-100"
+    >
+      <span
+        class="mb-7 translate-y-3 font-sans text-xs font-medium uppercase tracking-[0.4em] transition-transform duration-500 group-hover/img:translate-y-0"
+        style={`color:${accentHex[work.accent]}`}
+      >
+        <span class="pl">Zobacz</span><span class="en">View</span>
+      </span>
+    </span>
   </button>
 
   <div class="flex flex-1 flex-col gap-5 p-6">
