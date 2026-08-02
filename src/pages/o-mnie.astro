@@ -2,44 +2,24 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="O mnie">
-  <section class="mx-auto grid max-w-6xl grid-cols-1 gap-16 px-6 pb-24 pt-32 md:grid-cols-2 md:px-12 md:pt-40">
-    <img 
-  src="/images/marta-portrait.jpg" 
-  alt="Marta Kukla" 
-  class="aspect-[3/4] w-full object-cover" 
+<Layout title="O mnie" description="Marta Kukla — wielkoformatowa abstrakcja. Przestrzeń, światło i brak kompromisów.">
+  <section class="mx-auto grid max-w-6xl grid-cols-1 gap-16 px-6 pb-16 pt-32 md:grid-cols-2 md:px-12 md:pt-40">
+    <img
+      src="/images/marta-portrait.jpg"
+      alt="Marta Kukla"
+      class="aspect-[3/4] w-full object-cover"
     />
 
     <div class="flex flex-col justify-center">
       <p class="mb-4 font-sans text-[11px] uppercase tracking-widest2 text-ivory-muted">
         <span class="pl">O artystce</span><span class="en">About the artist</span>
       </p>
-      <h1 class="mb-8 font-serif text-5xl font-extralight text-ivory md:text-6xl">Marta Kukla</h1>
+      <h1 class="mb-6 font-serif text-5xl font-extralight text-ivory md:text-6xl">Marta Kukla</h1>
 
-      <div class="space-y-5 font-serif text-lg font-light leading-relaxed text-ivory-muted md:text-xl">
-        <p>
-          <span class="pl">
-            Maluje od ponad piętnastu lat, szukając w oleju i akrylu momentów, które trudno opisać słowami —
-            ciszy przed świtem, zapachu terpentyny w pracowni, linii, która pojawia się przypadkiem i zostaje
-            na zawsze.
-          </span>
-          <span class="en">
-            She has been painting for over fifteen years, searching in oil and acrylic for moments that are
-            hard to put into words — the silence before dawn, the smell of turpentine in the studio, a line
-            that appears by accident and stays for good.
-          </span>
-        </p>
-        <p>
-          <span class="pl">
-            Jej prace znajdują się w kolekcjach prywatnych w Polsce, Niemczech i Wielkiej Brytanii. Pracuje
-            w pracowni pod Wrocławiem, gdzie światło zmienia się co godzinę.
-          </span>
-          <span class="en">
-            Her work is held in private collections across Poland, Germany, and the United Kingdom. She works
-            from a studio near Wrocław, where the light changes by the hour.
-          </span>
-        </p>
-      </div>
+      <p class="font-serif text-xl font-light italic leading-relaxed text-ivory-muted md:text-2xl">
+        <span class="pl">Wielkoformatowa abstrakcja. Przestrzeń, światło i brak kompromisów.</span>
+        <span class="en">Large-format abstraction. Space, light, and no compromises.</span>
+      </p>
 
       <a
         href="/katalog"
@@ -51,13 +31,119 @@ import Layout from '../layouts/Layout.astro';
       </a>
     </div>
   </section>
-</Layout>
 
-<style>
-  .portrait-placeholder {
-    background:
-      radial-gradient(ellipse at 60% 20%, rgba(255, 0, 127, 0.12), transparent 55%),
-      radial-gradient(ellipse at 20% 80%, rgba(0, 245, 212, 0.1), transparent 55%),
-      linear-gradient(180deg, #1a1a1a, #121212);
-  }
-</style>
+  <section class="mx-auto max-w-3xl px-6 pb-24 md:px-12">
+    <div class="flex flex-col gap-16">
+
+      <div>
+        <h2 class="mb-6 font-sans text-xs uppercase tracking-widest2 text-neon-pink">
+          <span class="pl">O artystce</span><span class="en">About the artist</span>
+        </h2>
+        <div class="space-y-5 font-serif text-lg font-light leading-relaxed text-ivory-muted md:text-xl">
+          <p>
+            <span class="pl">
+              Polska artystka wychowana we Wrocławiu, dla której główną pracownią stał się Półwysep Iberyjski.
+              Od lat żyję w drodze, przemierzając Hiszpanię domem na kółkach w poszukiwaniu czystego światła,
+              surowej przestrzeni i nieprzewidywalności.
+            </span>
+            <span class="en">
+              A Polish artist raised in Wrocław, for whom the Iberian Peninsula has become my true studio.
+              For years I've lived on the road, crossing Spain in a home on wheels, chasing clean light,
+              raw space, and unpredictability.
+            </span>
+          </p>
+          <p>
+            <span class="pl">
+              Definiuję się jako minimalistyczna maksymalistka. Moje wielkoformatowe płótna to bezkompromisowe
+              zderzenie dwóch światów: dyscypliny formy z absolutną swobodą koloru. Nie uznaję zasady, że sztuka
+              musi wybierać między powagą a ekspresją. Chcę jednego i drugiego.
+            </span>
+            <span class="en">
+              I call myself a minimalist maximalist. My large-format canvases are an uncompromising collision
+              of two worlds — the discipline of form and the absolute freedom of colour. I don't accept that
+              art has to choose between gravity and expression. I want both.
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="mb-6 font-sans text-xs uppercase tracking-widest2 text-neon-acid">
+          <span class="pl">Język formy i materiału</span><span class="en">The language of form and material</span>
+        </h2>
+        <div class="space-y-5 font-serif text-lg font-light leading-relaxed text-ivory-muted md:text-xl">
+          <p>
+            <span class="pl">
+              W swojej twórczości czerpię z architektury i estetyki kalifornijskiego modernizmu lat 70. Sercem
+              moich prac jest dychotomia – zestawiam ze sobą struktury, które na pierwszy rzut oka nie mają
+              prawa ze sobą współgrać.
+            </span>
+            <span class="en">
+              My work draws on the architecture and aesthetics of 1970s Californian modernism. At the heart of
+              every piece is dichotomy — I set structures side by side that, at first glance, have no business
+              working together.
+            </span>
+          </p>
+
+          <ul class="space-y-3 border-l border-graphite-700 pl-6 not-italic">
+            <li>
+              <span class="pl"><strong class="font-normal text-ivory">Szlachetność i surowość:</strong> głębokie, metaliczne odcienie mosiądzu, złota i miedzi.</span>
+              <span class="en"><strong class="font-normal text-ivory">Nobility and rawness:</strong> deep, metallic tones of brass, gold, and copper.</span>
+            </li>
+            <li>
+              <span class="pl"><strong class="font-normal text-ivory">Czysta energia:</strong> nasycone pastele i bezwstydne neony.</span>
+              <span class="en"><strong class="font-normal text-ivory">Pure energy:</strong> saturated pastels and shameless neons.</span>
+            </li>
+          </ul>
+
+          <p>
+            <span class="pl">
+              To płótna stworzone do przestrzeni, które wymagają dominującego, mocnego akcentu – dzieła, które
+              nie wtapiają się w tło, lecz nadają wnętrzu tożsamość.
+            </span>
+            <span class="en">
+              These are canvases made for spaces that demand a dominant, powerful accent — works that don't
+              fade into the background, but give an interior its identity.
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="mb-6 font-sans text-xs uppercase tracking-widest2 text-neon-turquoise">
+          <span class="pl">Manifest: transformacja</span><span class="en">Manifesto: transformation</span>
+        </h2>
+        <div class="space-y-5 font-serif text-lg font-light leading-relaxed text-ivory-muted md:text-xl">
+          <p>
+            <span class="pl">
+              Moja relacja ze sztuką ma charakter bezkompromisowy. Ponad 15 lat temu malarstwo stało się dla
+              mnie jedynym językiem zdolnym wyprowadzić mnie z głębokiej depresji i życiowego mroku.
+            </span>
+            <span class="en">
+              My relationship with art is uncompromising. More than fifteen years ago, painting became the only
+              language capable of leading me out of deep depression and a dark period of my life.
+            </span>
+          </p>
+          <p class="font-normal not-italic text-ivory">
+            <span class="pl">Dziś nie maluję już mroku – maluję zwycięstwo nad nim.</span>
+            <span class="en">Today I no longer paint the darkness — I paint victory over it.</span>
+          </p>
+          <p>
+            <span class="pl">
+              Każde moje płótno jest fizyczną manifestacją odzyskanej siły, światła i przekraczania granic.
+              Tworzę z przekonaniem, że obraz w przestrzeni nie jest jedynie dekoracją. To wyraz siły i manifest
+              absolutnej wolności – tworzenia oraz życia na własnych warunkach.
+            </span>
+            <span class="en">
+              Every canvas of mine is a physical manifestation of reclaimed strength, light, and the crossing
+              of limits. I create with the conviction that a painting in a space is never mere decoration. It's
+              an expression of strength and a manifesto of absolute freedom — to create, and to live, on my own
+              terms.
+            </span>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</Layout>
