@@ -1,6 +1,6 @@
 slug,title_pl,title_en,year,dimensions,materials_pl,materials_en,description_pl,description_en,price,accent,featured_order,status
-cisza-przed-switem,Cisza przed świtem,Silence Before Dawn,2025,100 × 140 cm,Olej na płótnie,Oil on canvas,Warstwy błękitu i popiołu budują moment tuż przed pierwszym światłem.,Layers of blue and ash build the moment just before first light.,8200,turquoise,1,sold
-zapach-terpentyny,Zapach terpentyny,Scent of Turpentine,2024,80 × 100 cm,"Akryl, pigment, płótno","Acrylic, pigment, canvas","Gęste, impastowe pociągnięcia pędzla zachowują ruch dłoni.","Dense, impasto strokes preserve the motion of the hand.",5400,pink,2,sold
+cisza-przed-switem,Cisza przed świtem,Silence Before Dawn,2025,100 × 140 cm,Olej na płótnie,Oil on canvas,Warstwy błękitu i popiołu budują moment tuż przed pierwszym światłem.,Layers of blue and ash build the moment just before first light.,8200,turquoise,,sold
+zapach-terpentyny,Zapach terpentyny,Scent of Turpentine,2024,80 × 100 cm,"Akryl, pigment, płótno","Acrylic, pigment, canvas","Gęste, impastowe pociągnięcia pędzla zachowują ruch dłoni.","Dense, impasto strokes preserve the motion of the hand.",5400,pink,,sold
 linia-horyzontu,Linia horyzontu,The Horizon Line,2024,120 × 90 cm,Olej na płótnie,Oil on canvas,Minimalna kompozycja szukająca granicy między wodą a niebem.,A minimal composition searching for the border between water and sky.,6900,acid,3,
 wewnetrzny-ogrod,Wewnętrzny ogród,Interior Garden,2023,150 × 100 cm,"Olej, złoty pigment, płótno","Oil, gold pigment, canvas",Roślinne formy wynurzające się z ciemnego tła.,Botanical forms emerging from a dark ground.,11200,turquoise,,
 echo,Echo,Echo,2025,60 × 60 cm,Akryl na płótnie,Acrylic on canvas,Powtarzający się gest jako sposób na zapamiętanie chwili.,A repeated gesture as a way of remembering a moment.,3600,pink,,
@@ -10,7 +10,7 @@ zimowy-sad,Zimowy sad,Winter Orchard,2022,70 × 90 cm,Olej na płótnie,Oil on c
 niedokonczona-rozmowa,Niedokończona rozmowa,Unfinished Conversation,2024,110 × 140 cm,"Akryl, olej, płótno","Acrylic, oil, canvas","Dwie warstwy farby, które nigdy się nie dogadały do końca.",Two layers of paint that never quite agreed.,9100,acid,,
 sol,Sól,Salt,2023,50 × 70 cm,Akryl na płótnie,Acrylic on canvas,Biała faktura budowana warstwa po warstwie.,A white texture built layer by layer.,2900,pink,,
 droga-do-domu,Droga do domu,The Way Home,2022,100 × 80 cm,Olej na płótnie,Oil on canvas,"Perspektywa zapamiętana, nie odwzorowana.","A perspective remembered, not reproduced.",6700,turquoise,,
-wewnetrzne-morze,Wewnętrzne morze,Inner Sea,2025,130 × 160 cm,Olej na płótnie,Oil on canvas,"Duży format, spokojny gest, powtarzalny rytm fali.","Large format, a calm gesture, the repeating rhythm of a wave.",13400,acid,,
+wewnetrzne-morze,Wewnętrzne morze,Inner Sea,2025,130 × 160 cm,Olej na płótnie,Oil on canvas,"Duży format, spokojny gest, powtarzalny rytm fali.","Large format, a calm gesture, the repeating rhythm of a wave.",13400,acid,2,
 popiol-i-zloto,Popiół i złoto,Ash and Gold,2023,90 × 90 cm,"Olej, złoty pigment, płótno","Oil, gold pigment, canvas",Kontrast matowej szarości i pojedynczej złotej smugi.,A contrast of matte grey and a single streak of gold.,8900,pink,,
 pierwszy-mroz,Pierwszy mróz,First Frost,2024,60 × 80 cm,Akryl na płótnie,Acrylic on canvas,"Chłodna paleta i twarda, precyzyjna linia.","A cool palette and a hard, precise line.",4200,turquoise,,
 oddech,Oddech,Breath,2025,80 × 60 cm,Olej na płótnie,Oil on canvas,Jeden gest pędzla powtórzony aż stał się rytmem.,One brush gesture repeated until it became a rhythm.,4700,acid,,
@@ -18,5 +18,5 @@ zapomniany-ogrod,Zapomniany ogród,Forgotten Garden,2022,120 × 100 cm,Olej na p
 niebieska-godzina,Niebieska godzina,Blue Hour,2024,100 × 100 cm,Olej na płótnie,Oil on canvas,Moment między dniem a nocą złapany w jednym tonie.,"The moment between day and night, caught in a single tone.",7100,turquoise,,
 kruche,Kruche,Fragile,2023,50 × 50 cm,Akryl na płótnie,Acrylic on canvas,"Mały format, delikatna, niemal przezroczysta warstwa farby.","A small format, a delicate, near-transparent layer of paint.",2400,acid,,
 przystan,Przystań,Harbour,2025,110 × 90 cm,Olej na płótnie,Oil on canvas,Stonowana kompozycja budowana wokół pustego środka.,A muted composition built around an empty centre.,6500,pink,,
-cien-lipca,Cień lipca,July Shadow,2022,90 × 70 cm,Olej na płótnie,Oil on canvas,Ciepłe światło filtrowane przez gęsty cień.,Warm light filtered through dense shadow.,5300,turquoise,,
+cien-lipca,Cień lipca,July Shadow,2026,100 × 150 cm,Olej na płótnie,Oil on canvas,Ciepłe światło filtrowane przez gęsty cień.,Warm light filtered through dense shadow.,5300,turquoise,1,
 ostatnie-swiatlo,Ostatnie światło,Last Light,2025,140 × 100 cm,Olej na płótnie,Oil on canvas,"Duża, spokojna praca zamykająca cykl o świetle.","A large, quiet piece closing the cycle on light.",10800,acid,,
