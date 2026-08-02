@@ -145,4 +145,62 @@
     if (e.key === 'ArrowRight') next();
     if (e.key === 'ArrowLeft') prev();
   });
+
+  // Swipe navigation (touch / mobile) — swipe left = next, swipe right = prev.
+  // Only counts near-horizontal swipes, so a vertical drag doesn't
+  // accidentally flip images.
+  let touchStartX = 0;
+  let touchStartY = 0;
+  const SWIPE_THRESHOLD = 40;
+
+  lightbox.addEventListener(
+    'touchstart',
+    (e) => {
+      if (images.length <= 1) return;
+      const t = e.touches[0];
+      touchStartX = t.clientX;
+      touchStartY = t.clientY;
+    },
+    { passive: true },
+  );
+
+  lightbox.addEventListener(
+    'touchend',
+    (e) => {
+      if (images.length <= 1) return;
+      const t = e.changedTouches[0];
+      const dx = t.clientX - touchStartX;
+      const dy = t.clientY - touchStartY;
+      if (Math.abs(dx) > SWIPE_THRESHOLD && Math.abs(dx) > Math.abs(dy)) {
+        if (dx < 0) next();
+        else prev();
+      }
+    },
+    { passive: true },
+  );
+
+  // Mouse-wheel / trackpad navigation (desktop) — scroll down/right = next.
+  // Locked for a short cooldown per tick so one scroll gesture moves one
+  // image instead of racing through the whole set.
+  let wheelLocked = false;
+
+  lightbox.addEventListener(
+    'wheel',
+    (e) => {
+      if (lightbox.classList.contains('hidden') || images.length <= 1) return;
+      e.preventDefault();
+      if (wheelLocked) return;
+
+      const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      if (Math.abs(delta) < 12) return; // ignore trackpad jitter
+
+      wheelLocked = true;
+      if (delta > 0) next();
+      else prev();
+      setTimeout(() => {
+        wheelLocked = false;
+      }, 350);
+    },
+    { passive: false },
+  );
 </script>
