@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 export type Accent = 'pink' | 'acid' | 'turquoise';
+export type Status = 'available' | 'sold';
 
 export interface Work {
   slug: string;
@@ -12,6 +13,7 @@ export interface Work {
   description: { pl: string; en: string };
   price: number; // PLN
   accent: Accent;
+  status: Status; // 'sold' pokazuje plakietkę i zamienia cenę na "Sprzedane"
   featuredOrder: number | null; // pozycja na stronie głównej; null = nie pokazuj
   images: string[]; // every shot found on disk for this slug, in order
 }
@@ -136,6 +138,7 @@ function readWorksCSV(): WorkMeta[] {
         description: { pl: rec.description_pl, en: rec.description_en },
         price: parseInt(rec.price, 10),
         accent: (rec.accent as Accent) || 'turquoise',
+        status: rec.status === 'sold' ? 'sold' : 'available',
         featuredOrder: rec.featured_order ? parseInt(rec.featured_order, 10) : null,
       };
     });

@@ -49,9 +49,17 @@ const accentHex = { pink: '#ff007f', acid: '#ccff00', turquoise: '#00f5d4' } as 
       src={work.images[0]}
       alt={`${work.title.pl} — Marta Kukla`}
       loading="lazy"
-      class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover/img:scale-105"
+      class:list={[
+        'absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover/img:scale-105',
+        work.status === 'sold' && 'grayscale-[60%] opacity-70',
+      ]}
       onerror="this.remove()"
     />
+    {work.status === 'sold' && (
+      <span class="absolute left-3 top-3 rounded-full bg-ivory px-3 py-1 font-sans text-[10px] font-medium uppercase tracking-widest2 text-graphite-950">
+        <span class="pl">Sprzedane</span><span class="en">Sold</span>
+      </span>
+    )}
     {work.images.length > 1 && (
       <span class="absolute bottom-3 right-3 rounded-full bg-graphite-950/70 px-3 py-1 font-sans text-[10px] uppercase tracking-widest2 text-ivory backdrop-blur-sm">
         {work.images.length} <span class="pl">zdjęcia</span><span class="en">photos</span>
@@ -120,14 +128,29 @@ const accentHex = { pink: '#ff007f', acid: '#ccff00', turquoise: '#00f5d4' } as 
     </p>
 
     <div class="mt-auto flex items-center justify-between border-t border-graphite-700 pt-5">
-      <span class="font-serif text-2xl font-light text-ivory">{work.price.toLocaleString('pl-PL')} PLN</span>
+      {work.status === 'sold' ? (
+        <span class="font-serif text-2xl font-light text-ivory-muted">
+          <span class="pl">Sprzedane</span><span class="en">Sold</span>
+        </span>
+      ) : (
+        <span class="font-serif text-2xl font-light text-ivory">{work.price.toLocaleString('pl-PL')} PLN</span>
+      )}
       <a
-        href={`/kontakt?praca=${work.slug}`}
+        href={work.status === 'sold' ? '/kontakt' : `/kontakt?praca=${work.slug}`}
         class="brush-underline font-sans text-[11px] uppercase tracking-widest2 text-ivory"
         style={`--accent:${accentHex[work.accent]}`}
       >
-        <span class="pl">Odezwij się →</span>
-        <span class="en">Get in touch →</span>
+        {work.status === 'sold' ? (
+          <>
+            <span class="pl">Zapytaj o podobną pracę →</span>
+            <span class="en">Ask about a similar piece →</span>
+          </>
+        ) : (
+          <>
+            <span class="pl">Odezwij się →</span>
+            <span class="en">Get in touch →</span>
+          </>
+        )}
       </a>
     </div>
   </div>
