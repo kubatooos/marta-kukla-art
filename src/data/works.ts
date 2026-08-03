@@ -11,7 +11,8 @@ export interface Work {
   dimensions: string; // cm
   materials: { pl: string; en: string };
   description: { pl: string; en: string };
-  price: number; // PLN
+  price: number;
+  currency: 'PLN' | 'EUR';
   accent: Accent;
   status: Status; // 'sold' pokazuje plakietkę i zamienia cenę na "Sprzedane"
   featuredOrder: number | null; // pozycja na stronie głównej; null = nie pokazuj
@@ -126,6 +127,7 @@ function rowsToWorkMeta(rows: string[][]): WorkMeta[] {
         materials: { pl: rec.materials_pl, en: rec.materials_en },
         description: { pl: rec.description_pl, en: rec.description_en },
         price: parseInt(rec.price, 10),
+        currency: rec.currency === 'EUR' ? 'EUR' : 'PLN',
         accent: (rec.accent as Accent) || 'turquoise',
         status: rec.status === 'sold' ? 'sold' : 'available',
         featuredOrder: rec.featured_order ? parseInt(rec.featured_order, 10) : null,

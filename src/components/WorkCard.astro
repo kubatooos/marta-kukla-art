@@ -133,7 +133,9 @@ const accentHex = { pink: '#ff007f', acid: '#ccff00', turquoise: '#00f5d4' } as 
           <span class="pl">Sprzedane</span><span class="en">Sold</span>
         </span>
       ) : (
-        <span class="font-serif text-2xl font-light text-ivory">{work.price.toLocaleString('pl-PL')} PLN</span>
+        <span class="font-serif text-2xl font-light text-ivory">
+          {work.price.toLocaleString('pl-PL')} {work.currency === 'EUR' ? '€' : 'PLN'}
+        </span>
       )}
       <a
         href={work.status === 'sold' ? '/kontakt' : `/kontakt?praca=${work.slug}`}
