@@ -49,10 +49,7 @@ const accentHex = { pink: '#ff007f', acid: '#ccff00', turquoise: '#00f5d4' } as 
       src={work.images[0]}
       alt={`${work.title.pl} — Marta Kukla`}
       loading="lazy"
-      class:list={[
-        'absolute inset-0 h-full w-full object-contain transition-transform duration-700 group-hover/img:scale-105',
-        work.status === 'sold' && 'grayscale-[60%] opacity-70',
-      ]}
+      class="absolute inset-0 h-full w-full object-contain transition-transform duration-700 group-hover/img:scale-105"
       onerror="this.remove()"
     />
     {work.status === 'sold' && (
@@ -128,11 +125,7 @@ const accentHex = { pink: '#ff007f', acid: '#ccff00', turquoise: '#00f5d4' } as 
     </p>
 
     <div class="mt-auto flex items-center justify-between border-t border-graphite-700 pt-5">
-      {work.status === 'sold' ? (
-        <span class="font-serif text-2xl font-light text-ivory-muted">
-          <span class="pl">Sprzedane</span><span class="en">Sold</span>
-        </span>
-      ) : (
+      {work.status !== 'sold' && (
         <span class="font-serif text-2xl font-light text-ivory">
           {work.price.toLocaleString('pl-PL')} {work.currency === 'EUR' ? '€' : 'PLN'}
         </span>
