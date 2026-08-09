@@ -18,6 +18,7 @@ export default {
           pink: '#ff007f',
           acid: '#ccff00',
           turquoise: '#00f5d4',
+          rose: '#C75B7A', // menu accent, replacing turquoise per Marta's palette reference
         },
       },
       fontFamily: {
@@ -33,6 +34,7 @@ export default {
         'neon-pink': ['0 0 6px #ff007f', '0 0 22px #ff007f99'],
         'neon-acid': ['0 0 6px #ccff00', '0 0 22px #ccff0099'],
         'neon-turquoise': ['0 0 6px #00f5d4', '0 0 22px #00f5d499'],
+        'neon-rose': ['0 0 6px #C75B7A', '0 0 22px #C75B7A99'],
       },
       transitionTimingFunction: {
         brush: 'cubic-bezier(.2,.8,.2,1)',

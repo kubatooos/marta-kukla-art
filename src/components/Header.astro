@@ -3,13 +3,14 @@ interface NavItem {
   href: string;
   pl: string;
   en: string;
-  accent: 'pink' | 'acid' | 'turquoise';
+  accent: 'pink' | 'acid' | 'turquoise' | 'rose';
 }
 
 const accentHex = {
   pink: '#ff007f',
   acid: '#ccff00',
   turquoise: '#00f5d4',
+  rose: '#C75B7A',
 } as const;
 
 // Written as static literals (not template-built) so Tailwind's JIT scanner,
@@ -18,13 +19,14 @@ const glowClass = {
   pink: 'hover:drop-shadow-neon-pink',
   acid: 'hover:drop-shadow-neon-acid',
   turquoise: 'hover:drop-shadow-neon-turquoise',
+  rose: 'hover:drop-shadow-neon-rose',
 } as const;
 
 const items: NavItem[] = [
-  { href: '/', pl: 'Home', en: 'Home', accent: 'turquoise' },
+  { href: '/', pl: 'Home', en: 'Home', accent: 'rose' },
   { href: '/o-mnie', pl: 'O mnie', en: 'About', accent: 'pink' },
   { href: '/wystawy', pl: 'Wystawy', en: 'Exhibitions', accent: 'acid' },
-  { href: '/katalog', pl: 'Katalog prac', en: 'Catalogue', accent: 'turquoise' },
+  { href: '/katalog', pl: 'Katalog prac', en: 'Catalogue', accent: 'rose' },
   { href: '/kontakt', pl: 'Kontakt', en: 'Contact', accent: 'pink' },
 ];
 ---
