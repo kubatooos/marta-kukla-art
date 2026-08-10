@@ -1,25 +1,12 @@
 ---
-// The brief calls for a macro photo of a brush mid-stroke on canvas.
-// /public/images/hero-brush.jpg is the intended swap-in — drop a real
-// photograph there (any name, update the src below) once photography
-// is available. Until then this renders a painted CSS approximation
-// in the same tonal register so the layout ships looking intentional,
-// not like a broken image.
 ---
 
 <section class="relative flex h-[100svh] min-h-[560px] w-full items-center justify-center overflow-hidden bg-graphite-950">
-  <!-- Swap this div for: <img src="/images/hero-brush.jpg" class="absolute inset-0 h-full w-full object-cover" alt=""> -->
-  <div class="hero-brush-fallback absolute inset-0 overflow-hidden">
-    <div class="hero-depth absolute inset-0">
-      <div class="depth-blob depth-blob-1"></div>
-      <div class="depth-blob depth-blob-2"></div>
-      <div class="depth-blob depth-blob-3"></div>
-      <div class="depth-blob depth-blob-4"></div>
-      <div class="hero-glow hero-glow-pink absolute inset-0"></div>
-      <div class="hero-glow hero-glow-acid absolute inset-0"></div>
-    </div>
-    <div class="hero-vignette absolute inset-0"></div>
-  </div>
+  <img
+    src="/images/hero-brush.jpg"
+    alt=""
+    class="absolute inset-0 h-full w-full object-cover"
+  />
   <div class="absolute inset-0 bg-gradient-to-b from-graphite-950/70 via-graphite-950/55 to-graphite-950"></div>
 
   <div class="relative z-10 flex flex-col items-center px-6 text-center">
@@ -43,66 +30,3 @@
     </a>
   </div>
 </section>
-
-<style>
-  /* Base graphite gradient — deeper tonal range than before (near-black
-     corners to a lighter warm-graphite zone) so there's real value
-     contrast for the blurred blobs to sit inside, same idea as the
-     reference's dark-to-light diagonal drift. */
-  .hero-brush-fallback {
-    background: linear-gradient(135deg, #211f1c 0%, #141312 45%, #060606 100%);
-  }
-
-  /* Soft, out-of-focus "bokeh" depth field: a handful of large blurred
-     solid blobs at different tones/positions, blurred as a group so
-     they melt into each other — this is what actually reads as
-     "depth" (a photographic quality) rather than a flat CSS gradient. */
-  .hero-depth {
-    filter: blur(90px);
-    transform: scale(1.15); /* avoid hard blur edges at the viewport border */
-  }
-  .depth-blob {
-    position: absolute;
-    border-radius: 9999px;
-  }
-  .depth-blob-1 {
-    width: 55%; height: 75%; left: -12%; top: -18%;
-    background: #34302a; /* lighter warm-graphite zone, top-left — echoes the reference */
-  }
-  .depth-blob-2 {
-    width: 45%; height: 55%; right: -8%; top: -12%;
-    background: #030303; /* near-black corner, top-right */
-  }
-  .depth-blob-3 {
-    width: 65%; height: 45%; left: 15%; bottom: -18%;
-    background: #17140f;
-  }
-  .depth-blob-4 {
-    width: 38%; height: 38%; right: 8%; bottom: -6%;
-    background: #423c33;
-    opacity: 0.7;
-  }
-
-  /* Brand neon breathing gently in the mix, much fainter than before —
-     a whisper of colour inside the depth field, not a colourful hero. */
-  .hero-glow-pink {
-    background: radial-gradient(ellipse 55% 40% at 22% 32%, rgba(255, 0, 127, 0.08), transparent 62%);
-    animation: hero-pulse 6s ease-in-out infinite;
-  }
-  .hero-glow-acid {
-    background: radial-gradient(ellipse 60% 45% at 55% 82%, rgba(204, 255, 0, 0.05), transparent 65%);
-    animation: hero-pulse 7.5s ease-in-out infinite;
-    animation-delay: -3s;
-  }
-
-  /* Vignette on top of the blur layer — darkened corners give the
-     photographic "depth of field" read the reference has. */
-  .hero-vignette {
-    background: radial-gradient(ellipse 75% 75% at 50% 45%, transparent 45%, rgba(5, 5, 5, 0.55) 100%);
-  }
-
-  @keyframes hero-pulse {
-    0%, 100% { opacity: 0.55; }
-    50% { opacity: 1; }
-  }
-</style>
