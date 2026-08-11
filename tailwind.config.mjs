@@ -26,6 +26,8 @@ export default {
         serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
         // Utility face — small caps labels, meta data, buttons, price tags
         sans: ['"Jost"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        // Handwritten accent — used sparingly (e.g. the Hero welcome line)
+        signature: ['"Fuggles"', 'cursive'],
       },
       letterSpacing: {
         widest2: '0.35em',
